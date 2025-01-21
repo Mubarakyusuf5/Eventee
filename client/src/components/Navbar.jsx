@@ -15,7 +15,7 @@ export const Navbar = () => {
 
         {/* Navigation Links */}
         <div className=" gap-6 hidden lg:flex">
-          {["Browse Events", "Host Events", "Find Tickets"].map((item) => (
+          {[ "Plan Events", "Need Help"].map((item) => (
             <Link
               key={item}
               to="/"
@@ -29,15 +29,15 @@ export const Navbar = () => {
 
       {/* Search Bar and CTA Buttons */}
       <div className="hidden gap-4 items-center lg:flex">
-        {/* Search Bar */}
+        {/* Search Bar
         <div className="flex items-center bg-gray-100 rounded-full overflow-hidden pl-4 shadow-sm hover:shadow-md transition duration-300">
           <MagnifyingGlassIcon className="text-gray-400 mr-2 h-6  " />
           <input
             type="text"
-            placeholder="Search events..."
+            placeholder="Search vendor..."
             className="py-2 pr-4 bg-transparent outline-none w-[250px] "
           />
-        </div>
+        </div> */}
 
         {/* CTA Buttons */}
         <div className="flex gap-3">

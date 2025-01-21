@@ -4,15 +4,17 @@ const {Events} = require("../models/eventModel");
 const createEvent = async (req, res) => {
   try {
     const {
+      organizerId,
       eventName,
       location,
-      date,
+      date, 
+      time,
       status,
-      type,
-      price,
-      venue,
-      description,
-      image,
+      budget,
+      maxAttendee,
+      venue, 
+      category,
+      description, 
     } = req.body;
 
     // Check if event with the same name already exists
@@ -23,7 +25,7 @@ const createEvent = async (req, res) => {
 
     // Create new event
     const newEvent = await Events.create({
-      eventName, image, location, date, status, type, price, venue, description,
+      organizerId, eventName, location, date, time, status, budget, venue, category, maxAttendee, description,
     });
 
     // Respond with success message
@@ -54,7 +56,7 @@ const displayEventById = async (req, res)=>{
 
   const updateEvent = async (req, res) => {
     try {
-      // const { eventName, location, date, status, type, price, venue, description, image, } = req.body;
+      // const { organizerId, eventName, location, date, time, status, budget, venue, category, maxAttendee, description, } = req.body;
   
       const updatedEvent = await Events.findByIdAndUpdate(req.params.id, req.body, { new: true });
   

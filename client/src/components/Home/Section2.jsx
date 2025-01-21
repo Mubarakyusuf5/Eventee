@@ -18,7 +18,7 @@ export const Section2 = () => {
           to a wider audience.
         </p>
         <button className="bg-[#00539C] hover:bg-[#003366] text-white py-3 px-4 rounded-xl">
-          Register as Vendor
+          Register Now
         </button>
       </div>
       <div className="md:flex gap-7 font-poppins text-lg">

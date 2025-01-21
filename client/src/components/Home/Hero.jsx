@@ -9,21 +9,21 @@ export const Hero = () => {
             Plan Your Dream Event with Ease
           </h1>
           <h2 className="text-xl md:text-2xl font-medium mb-4 lg:mb-8 text-center max-w-2xl">
-            Your all-in-one platform for event management, booking, and vendor partnerships.
+            Your all-in-one platform for event planning, and vendor partnerships.
           </h2>
         {/* searchBar */}
         <div className="flex items-center bg-white rounded-full overflow-hidden pl-4 mb-4 lg:mb-8 w-full max-w-md hover:shadow-lg transition duration-300">
             <MagnifyingGlassIcon className="text-gray-400 mr-2 h-6  " />
             <input
               type="text"
-              placeholder="Search events..."
+              placeholder="Search vendors..."
               className="py-3 pr-4 bg-transparent outline-none w-full"
             />
           </div>
-        <div className="flex gap-3">
+        {/* <div className="flex gap-3">
             <button className="py-3 px-4 bg-gray-900 text-white rounded-2xl hover:bg-slate-600 transition-all duration-300">Browse Events</button>
             <button className="py-3 px-4 bg-gray-900 text-white rounded-2xl hover:bg-slate-600 transition-all duration-300">Host Events</button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

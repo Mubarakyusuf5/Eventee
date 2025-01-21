@@ -83,9 +83,9 @@ export const Signup = () => {
               <option value="" disabled>
                 Select your role
               </option>
-              <option value="Organizer">Organizer</option>
-              <option value="Vendor">Vendor</option>
-              <option value="Attendee">Attendee</option>
+              <option value="Organizer">Organizer - Sign up to plan your dream event</option>
+              <option value="Vendor">Vendor - Sign up to showcase your services</option>
+              {/* <option value="Attendee">Attendee</option> */}
             </select>
             <button
               type="button"

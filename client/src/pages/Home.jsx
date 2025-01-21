@@ -14,7 +14,7 @@ export const Home = () => {
       <Hero />
       <Section1 />
       <Section2 />
-      <BrowseSection />
+      {/* <BrowseSection /> */}
       <Footer/>
     </div>
   )

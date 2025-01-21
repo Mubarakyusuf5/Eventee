@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
 // Category Schema
-const categorySchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true, // Ensures no duplicate category names
-    trim: true,   // Removes extra spaces
-  },
-});
+// const categorySchema = mongoose.Schema({
+//   name: {
+//     type: String,
+//     required: true,
+//     unique: true, // Ensures no duplicate category names
+//     trim: true,   // Removes extra spaces
+//   },
+// });
 
 // Event Schema
 const EventSchema = mongoose.Schema(
@@ -26,10 +26,10 @@ const EventSchema = mongoose.Schema(
       maxlength: 100,
       unique: true,
     },
-    image: {
-      type: String,
-      default: "default-image.jpg", // Placeholder image URL
-    },
+    // image: {
+    //   type: String,
+    //   default: "default-image.jpg", // Placeholder image URL
+    // },
     location: {
       type: String,
       required: true,
@@ -45,16 +45,16 @@ const EventSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    price: {
+    budget: {
       type: Number,
       default: 0, // Free events by default
       min: 0,     // Prevent negative prices
     },
-    type: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    // type: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
     status: {
       type: String,
       enum: ["Completed", "Cancelled", "Scheduled"],
@@ -68,11 +68,20 @@ const EventSchema = mongoose.Schema(
       type: String, // Use string to store just the time, e.g., "10:00 AM"
       required: true,
     },
+    maxAttendee: {
+      type: Number,
+      required: true
+    },
+    // category: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Category",
+    //   required: true,
+    //   index: true, // Optimize queries by category
+    // },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      type: String,
       required: true,
-      index: true, // Optimize queries by category
+      // index: true, // Optimize queries by category
     },
   },
   {
@@ -81,7 +90,7 @@ const EventSchema = mongoose.Schema(
 );
 
 // Create Models
-const Categories = mongoose.model("Category", categorySchema);
+// const Categories = mongoose.model("Category", categorySchema);
 const Events = mongoose.model("Event", EventSchema);
 
-module.exports = { Events, Categories };
+module.exports = { Events };

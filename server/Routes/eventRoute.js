@@ -5,9 +5,9 @@ const { createEvent, displayEvent, displayEventById, updateEvent, deleteEvent } 
 
 router.post("/createEvent", createEvent)
 router.get("/displayEvent", displayEvent)
-router.get("/displayEventById", displayEventById)
-router.put("/updateEvent", updateEvent)
-router.delete("/deleteEvent", deleteEvent)
+router.get("/displayEventById/:id", displayEventById)
+router.put("/updateEvent/:id", updateEvent)
+router.delete("/deleteEvent/:id", deleteEvent)
 
 
 

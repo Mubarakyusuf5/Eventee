@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { States } from "../src/Data";
+import axios from "axios";  // Add axios import
+import { States, Services } from "../src/Data";
+import toast from "react-hot-toast";  // Optional: for showing notifications
 
 export const CompleteDetailsPage = () => {
   const role = "Vendor";
-
-  console.log(States);
+  const userId = 55;
 
   // State for form data
   const [formData, setFormData] = useState({
+    // vendorId: userId,
     businessName: "",
     email: "",
-    phoneNumber: "",
-    serviceCategories: [],
-    customCategory: "",
+    phone: "",
+    state: "",
+    service: "",
+    description: "",
   });
 
   // Handle input changes
@@ -20,16 +23,34 @@ export const CompleteDetailsPage = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = (e) => {
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  };
-  // Handle multi-select changes
-  const handleCategoryChange = (e) => {
-    const options = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setFormData({ ...formData, serviceCategories: options });
+    if ( !formData.businessName || !formData.email || !formData.phone || !formData.state || !formData.service || !formData.description
+    ) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/api/vendor/createVendor", formData);
+      toast.success(response.data.message || "Vendor created successfully!");
+    //   setFormData(
+    //     businessName: "",
+    //   email: "",
+    //   phone: "",
+    //   state: "",
+    //   service: "",
+    // description: "",)
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);  // Display the error message from backend
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -37,7 +58,7 @@ export const CompleteDetailsPage = () => {
       <div className="flex items-center justify-center flex-col">
         <form
           onSubmit={handleSubmit}
-          className=" transition-all duration-300 w-full md:w-[600px] bg-white p-6 md:rounded-xl md:border"
+          className="transition-all duration-300 w-full md:w-[600px] bg-white p-6 md:rounded-xl md:border"
         >
           <h1 className="font-medium text-2xl">Eventee</h1>
           <div className="mt-7 mb-5">
@@ -45,83 +66,11 @@ export const CompleteDetailsPage = () => {
             <p className="text-sm">Let us know more about yourself</p>
           </div>
           <h1 className="font-medium text-2xl mb-3">Business Details</h1>
-          {/* organizer details */}
-          {role === "Organizer" && (
-            <div>
-              <div className="mb-3">
-                <label htmlFor="" className="">
-                  Organizer Name
-                </label>
-                <input
-                  type="text"
-                  className="p-2 border w-full rounded-md"
-                  placeholder="Enter Organizer name"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="" className="">
-                  Email (optional){" "}
-                </label>
-                <input
-                  type="text"
-                  className="p-2 border w-full rounded-md"
-                  placeholder="Enter Organizer name"
-                />
-              </div>
-              <div className="mb-5">
-                <label htmlFor="" className="">
-                  Describe the Events You Plan to Host
-                </label>
-                <textarea
-                  name=""
-                  id=""
-                  rows="5"
-                  className="w-full border rounded-md p-2"
-                  placeholder="E.g., Corporate conferences, weddings, or charity fundraisers."
-                ></textarea>
-                {/* <input type="text" className="p-2 border w-full rounded-md" placeholder="Enter Organizer name" /> */}
-              </div>
-
-              {/* Account details */}
-              <h1 className="font-medium text-2xl mb-3">Account Details</h1>
-              <div className="mb-3">
-                <label htmlFor="" className="">
-                  Bank Name
-                </label>
-                <select name="" id="" className="w-full p-2 border rounded-md">
-                  <option value="">Selct your bank</option>
-                </select>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="" className="">
-                  Account Holder's Full Name"
-                </label>
-                <input
-                  type="text"
-                  className="p-2 border w-full rounded-md"
-                  placeholder="Enter Organizer name"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="" className="">
-                  Account Number
-                </label>
-                <input
-                  type="text"
-                  className="p-2 border w-full rounded-md"
-                  placeholder="Enter Organizer name"
-                />
-              </div>
-            </div>
-          )}
-
           {/* For vendor details */}
           {role === "Vendor" && (
             <div>
               <div className="mb-3">
-                <label htmlFor="businessName" className="">
-                  Business Name
-                </label>
+                <label htmlFor="businessName">Business Name</label>
                 <input
                   type="text"
                   name="businessName"
@@ -132,11 +81,9 @@ export const CompleteDetailsPage = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="email" className="">
-                  Email Address
-                </label>
+                <label htmlFor="email">Email Address</label>
                 <input
-                  type="text"
+                  type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
@@ -145,25 +92,27 @@ export const CompleteDetailsPage = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="phoneNumber" className="">
-                  Phone Number
-                </label>
+                <label htmlFor="phone">Phone Number</label>
                 <input
-                  type="text"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
                   onChange={handleInputChange}
                   className="p-2 border w-full rounded-md"
                   placeholder="Enter phone number"
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="state" className="">
-                  State
-                </label>
-                <select name="" id="" className="w-full p-2 border rounded-md">
+                <label htmlFor="state">State</label>
+                <select
+                  id="state"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded-md"
+                >
                   <option value="" disabled>
-                    select your state
+                    Select your state
                   </option>
                   {States.map((state, index) => (
                     <option key={index} value={state.name}>
@@ -172,54 +121,38 @@ export const CompleteDetailsPage = () => {
                   ))}
                 </select>
               </div>
-              {/* <div className="mb-3">
-              <label>
-              Service Categories:
-              <select
-              name="serviceCategories"
-              value={formData.serviceCategories}
-              onChange={handleCategoryChange}
-              multiple
-              className="p-2 border w-full rounded-md"
+              <div className="mb-3">
+                <label htmlFor="service">Service Offered</label>
+                <select
+                  name="service"
+                  value={formData.service}
+                  onChange={handleInputChange}
+                  className="p-2 border w-full rounded-md"
                 >
-                <option value="catering">Catering</option>
-                <option value="decoration">Decoration</option>
-                <option value="rentals">Rentals</option>
-                <option value="photography">Photography</option>
-                <option value="entertainment">Entertainment</option>
+                  <option value="" disabled>
+                    Select your service category
+                  </option>
+                  {Services.map((service, index) => (
+                    <option key={index} value={service.name}>
+                      {service.name}
+                    </option>
+                  ))}
                 </select>
-              </label>
-              </div> */}
-              {formData.serviceCategories.includes("other") && (
-                <div className="mb-3">
-                  <label htmlFor="customCategory" className="">
-                    Custom Category:
-                  </label>
-                  <input
-                    type="text"
-                    name="customCategory"
-                    value={formData.customCategory}
-                    onChange={handleInputChange}
-                    className="p-2 border w-full rounded-md"
-                    placeholder="Enter custom category"
-                  />
-                </div>
-              )}
-              {/* <div>
-                <label htmlFor="image">Portfolio (Images of Past Work):</label>
-                <input
-                  className="p-2 w-full"
-                  type="file"
-                  name="portfolio"
-                  id="image"
-                  // onChange={handleFileChange}
-                  accept="image/*"
-                  multiple
-                />
-              </div> */}
+              </div>
+              <div className="mb-5">
+                <label htmlFor="description">Describe your Business</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  rows="5"
+                  className="w-full border rounded-md p-2"
+                  placeholder="Describe your Business"
+                ></textarea>
+              </div>
             </div>
           )}
-          <button className="w-full p-2 bg-slate-500 rounded-md  mt-6 font-medium text-white">
+          <button className="w-full p-2 bg-slate-500 rounded-md mt-6 font-medium text-white">
             Submit
           </button>
         </form>

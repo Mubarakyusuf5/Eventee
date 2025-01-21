@@ -37,3 +37,17 @@ export const States = [
     { name: "Yobe" },
     { name: "Zamfara" }
 ];
+
+export const Services = [
+    {name: "Catering"},
+    {name: "Decoration"},
+    {name: "Rental"},
+    {name: "Photography"},
+    {name: "Entertainment"},
+]
+
+export const Categories = [
+    {name: "Wedding"},
+    {name: "Birthday"},
+    {name: "Corporate"},
+]
